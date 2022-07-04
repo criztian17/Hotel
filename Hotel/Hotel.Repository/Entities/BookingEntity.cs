@@ -53,12 +53,14 @@ namespace Hotel.Repository.Entities
         /// <summary>
         /// Amount of the reservation
         /// </summary>
+        [Required]
         [Column(TypeName = "decimal(7,2)")]
         public decimal Amount { get; set; }
 
         /// <summary>
         /// Status of the booking
         /// </summary>
+        [Required]
         public int Status { get; set; }
     }
 }
