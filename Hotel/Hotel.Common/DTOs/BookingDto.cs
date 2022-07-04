@@ -1,49 +1,17 @@
-﻿using Hotel.Common.Enumerators;
-using Newtonsoft.Json;
-using System;
-using System.ComponentModel.DataAnnotations;
+﻿using Hotel.Common.DTOs.Bases;
 
 namespace Hotel.Common.DTOs
 {
-    public class BookingDto : BaseDto
+    public class BookingDto : BaseBookingDto
     {
         /// <summary>
-        /// Number of the reservation
+        /// Id of the room
         /// </summary>
-        public string BookingNumber { get; set; }
-
+        public int RoomId { get; set; }
+        
         /// <summary>
-        /// Booked Room
+        /// Id of the guest
         /// </summary>
-        public RoomDto Room { get; set; }
-
-        /// <summary>
-        /// Guest who books the room
-        /// </summary>
-        public GuestDto Guest { get; set; }
-
-        /// <summary>
-        /// Date when the Booking starts
-        /// </summary>
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = false)]
-        public DateTime CheckIn { get; set; }
-
-        /// <summary>
-        /// Date when the Booking ends
-        /// </summary>
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = false)]
-        public DateTime CheckOut { get; set; }
-
-        /// <summary>
-        /// Amount of the reservation
-        /// </summary>
-        public decimal Amount { get; set; }
-
-        /// <summary>
-        /// Status of the booking
-        /// </summary>
-        [DisplayFormat(DataFormatString = "{0:N2}")]
-        public BookingStatus Status { get; set; }
-
+        public int GuestId { get; set; }
     }
 }

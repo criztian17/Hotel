@@ -19,22 +19,6 @@ namespace Hotel.Repository.Repositories.Implementations
             _unitOfWork = unitOfWork;
         }
         #endregion
-
-        #region Public Methods
-        public async Task<bool> ChangeBookingStatusAsync(int id, BookingStatus status)
-        {
-            try
-            {
-                var booking = await GetByIdAsync(id);
-                booking.Status = (int)status;
-
-                return await UpdateAsync(booking);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        } 
-        #endregion
+       
     }
 }

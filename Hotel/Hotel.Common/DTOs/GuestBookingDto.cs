@@ -9,6 +9,6 @@ namespace Hotel.Common.DTOs
         /// Reservations
         /// </summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public ICollection<BookingDto> Bookings { get; set; }
+        public ICollection<BookingFullDto> Bookings { get; set; }
     }
 }

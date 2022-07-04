@@ -1,4 +1,4 @@
-﻿namespace Hotel.Common.DTOs
+﻿namespace Hotel.Common.DTOs.Bases
 {
     public class BaseDto
     {

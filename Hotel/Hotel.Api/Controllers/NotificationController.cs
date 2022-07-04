@@ -1,19 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Hotel.Service.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class NotificationController : ControllerBase
     {
+        #region Attributes
+        private readonly INotificationService _notificationService;
+        #endregion
+
+        #region Constructor
+        public NotificationController(INotificationService notificationService)
+        {
+            _notificationService = notificationService;
+        }
+        #endregion
 
         #region Actions
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         [HttpPost]
         public void Post([FromBody] string value)
         {

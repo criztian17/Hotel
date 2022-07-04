@@ -1,4 +1,5 @@
 ﻿using Hotel.Common.DTOs;
+using Hotel.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Threading.Tasks;
@@ -9,6 +10,16 @@ namespace Hotel.Api.Controllers
     [Route("[controller]")]
     public class BookingController : ControllerBase
     {
+        #region Attributes
+        private readonly IBookingService _bookingService;
+        #endregion
+
+        #region Constructor
+        public BookingController(IBookingService bookingService)
+        {
+            _bookingService = bookingService;
+        }
+        #endregion
 
         #region Actions
 

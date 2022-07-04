@@ -1,11 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Hotel.Service.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public class RoomCController : ControllerBase
+    [Route("[controller]")]
+    public class RoomController : ControllerBase
     {
+        #region Attributes
+        private readonly IRoomService _roomService;
+        #endregion
+
+        #region Constructor
+        public RoomController(IRoomService roomService)
+        {
+            _roomService = roomService;
+        }
+        #endregion
+
         #region Actions
 
         [HttpGet("{id}")]

@@ -1,4 +1,5 @@
-﻿using Hotel.Common.Enumerators;
+﻿using Hotel.Common.DTOs.Bases;
+using Hotel.Common.Enumerators;
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
