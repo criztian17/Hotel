@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,8 @@ namespace Hotel.Api.Controllers
         }
 
         [HttpGet]
+        [SwaggerOperation("Get WeatherForecast")]
+        [SwaggerResponse(500, Description = "Internal Server Error")]
         public IEnumerable<WeatherForecast> Get()
         {
             var rng = new Random();

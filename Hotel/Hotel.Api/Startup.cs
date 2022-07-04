@@ -21,7 +21,9 @@ namespace Hotel.Api
         {
             services.AddControllers();
 
-            services.AddRepository();
+            services
+                .AddSwaggerDocumentation()
+                .AddRepository();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +44,8 @@ namespace Hotel.Api
             {
                 endpoints.MapControllers();
             });
+
+            app.UseSwaggerDocumentation(Configuration);
         }
     }
 }
