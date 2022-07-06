@@ -20,6 +20,11 @@ namespace Hotel.Repository
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<GuestEntity>(entity => 
+            { 
+                entity.HasKey(g => g.Id);
+            });    
+
             modelBuilder.Entity<GuestEntity>(entity =>
             {
                 entity.HasIndex(g => g.Email).IsUnique();
@@ -27,7 +32,17 @@ namespace Hotel.Repository
 
             modelBuilder.Entity<RoomEntity>(entity =>
             {
+                entity.HasKey(r => r.Id);
+            });
+
+            modelBuilder.Entity<RoomEntity>(entity =>
+            {
                 entity.HasIndex(r => r.RoomNumber).IsUnique();
+            });
+
+            modelBuilder.Entity<BookingEntity>(entity =>
+            {
+                entity.HasKey(b => b.Id);
             });
 
             modelBuilder.Entity<BookingEntity>(entity =>

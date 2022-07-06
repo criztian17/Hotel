@@ -1,13 +1,13 @@
-﻿using Hotel.Common.Enumerators;
+﻿using Hotel.Common.DTOs.Bases.Interfaces;
+using Hotel.Common.Enumerators;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Hotel.Common.DTOs.Bases
 {
-    public  class BaseBookingDto: BaseDto
+    public  class BaseBookingDto
     {
+       
         /// <summary>
         /// Number of the reservation
         /// </summary>

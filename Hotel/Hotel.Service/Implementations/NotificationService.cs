@@ -1,4 +1,5 @@
 ﻿using Hotel.Common.DTOs;
+using Hotel.Common.DTOs.Bases;
 using Hotel.Repository.Repositories.Interfaces;
 using Hotel.Service.Interfaces;
 using System;
@@ -20,7 +21,7 @@ namespace Hotel.Service.Implementations
         #endregion
 
         #region Public Methods
-        public Task<NotificationDto> CreateNotificationAsync(NotificationDto notification)
+        public Task<NotificationDto> CreateNotificationAsync(BaseNotificationDto notification)
         {
             throw new NotImplementedException();
         } 

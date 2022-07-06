@@ -1,4 +1,5 @@
 ﻿using Hotel.Common.DTOs;
+using Hotel.Common.DTOs.Bases;
 using Hotel.Common.Enumerators;
 using Hotel.Repository.Repositories.Interfaces;
 using Hotel.Service.Interfaces;
@@ -27,7 +28,7 @@ namespace Hotel.Service.Implementations
             throw new NotImplementedException();
         }
 
-        public Task<RoomDto> CreateRoomAsync(RoomDto room)
+        public Task<RoomDto> CreateRoomAsync(BaseRoomDto room)
         {
             throw new NotImplementedException();
         }

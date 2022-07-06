@@ -28,12 +28,12 @@ namespace Hotel.Service.Implementations
         #endregion
 
         #region Public Methods
-        public Task<BookingFullDto> CreateBookingAsync(BookingDto booking)
+        public Task<FullBookingDto> CreateBookingAsync(BookingDto booking)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteBookingAsync(BookingFullDto booking)
+        public Task<bool> DeleteBookingAsync(FullBookingDto booking)
         {
             throw new NotImplementedException();
         }
@@ -43,17 +43,17 @@ namespace Hotel.Service.Implementations
             throw new NotImplementedException();
         }
 
-        public Task<ICollection<BookingFullDto>> GetAllBookingsAsync()
+        public Task<ICollection<FullBookingDto>> GetAllBookingsAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<BookingFullDto> GetBookingByIdAsync(int id)
+        public Task<FullBookingDto> GetBookingByIdAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> UpdateGuestAsync(BookingFullDto booking)
+        public Task<bool> UpdateGuestAsync(FullBookingDto booking)
         {
             throw new NotImplementedException();
         } 

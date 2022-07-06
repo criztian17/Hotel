@@ -1,25 +1,10 @@
 ﻿using Hotel.Common.DTOs.Bases;
-using Hotel.Common.Enumerators;
-using System.ComponentModel.DataAnnotations;
+using Hotel.Common.DTOs.Bases.Interfaces;
 
 namespace Hotel.Common.DTOs
 {
-    public class RoomDto : BaseDto
+    public class RoomDto : BaseRoomDto, IBaseDto
     {
-        /// <summary>
-        /// Number of the Room
-        /// </summary>
-        public string RoomNumber { get; set; }
-
-        /// <summary>
-        /// Indicates the current status of the Room
-        /// </summary>
-        public RoomStatus Status { get; set; }
-
-        /// <summary>
-        /// Booking Price
-        /// </summary>
-        [DisplayFormat(DataFormatString = "{0:N2}")]
-        public decimal BookingPrice { get; set; }
+        public int Id { get; set; }
     }
 }

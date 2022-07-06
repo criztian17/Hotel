@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Hotel.Service.Helpers.Mappers
+namespace Hotel.Common.Helpers.Mappers
 {
-    internal static class MapperGenericHelper<T,C>
+    public static class MapperGenericHelper<T,C>
     {
         public static C ToMapper(T model)
         {

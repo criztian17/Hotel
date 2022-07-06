@@ -1,5 +1,6 @@
 ﻿using Hotel.Api.Helpers;
 using Hotel.Common.DTOs;
+using Hotel.Common.DTOs.Bases;
 using Hotel.Common.Exceptions;
 using Hotel.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -54,7 +55,7 @@ namespace Hotel.Api.Controllers
         [SwaggerResponse(200, type: typeof(GuestDto))]
         [SwaggerResponse(400, type: typeof(RuleError))]
         [SwaggerResponse(500, Description = "Internal Server Error")]
-        public async Task<ActionResult<bool>> CreateGuestAsync([FromBody] GuestDto guest)
+        public async Task<ActionResult<GuestDto>> CreateGuestAsync([FromBody] BaseGuestDto guest)
         {
             try
             {

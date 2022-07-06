@@ -1,9 +1,10 @@
 ﻿using Hotel.Common.DTOs;
+using Hotel.Common.DTOs.Bases;
 using Hotel.Common.Exceptions;
+using Hotel.Common.Helpers.Mappers;
 using Hotel.Repository.Entities;
 using Hotel.Repository.Repositories.Interfaces;
 using Hotel.Service.Helpers;
-using Hotel.Service.Helpers.Mappers;
 using Hotel.Service.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace Hotel.Service.Implementations
         #endregion
 
         #region Public Methods
-        public async Task<GuestDto> CreateGuestAsync(GuestDto guest)
+        public async Task<GuestDto> CreateGuestAsync(BaseGuestDto guest)
         {
             try
             {
@@ -34,7 +35,7 @@ namespace Hotel.Service.Implementations
                     throw new BusinessException(400, Constants.InvalidModel);
                 }
 
-                var result = await _guestRepository.CreateAsync(MapperGenericHelper<GuestDto, GuestEntity>.ToMapper(guest));
+                var result = await _guestRepository.CreateAsync(MapperGenericHelper<BaseGuestDto, GuestEntity>.ToMapper(guest));
                 return MapperGenericHelper<GuestEntity, GuestDto>.ToMapper(result);
             }
             catch (Exception ex)
@@ -96,7 +97,7 @@ namespace Hotel.Service.Implementations
         #endregion
 
         #region Private Methods
-        private bool ValidateModel(GuestDto guest)
+        private bool ValidateModel(BaseGuestDto guest)
         {
             if (string.IsNullOrEmpty(guest.Address) || string.IsNullOrEmpty(guest.Name) || string.IsNullOrEmpty(guest.PhoneNumber) || string.IsNullOrEmpty(guest.Email))
             { 

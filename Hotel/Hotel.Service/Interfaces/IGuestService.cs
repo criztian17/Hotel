@@ -1,4 +1,5 @@
 ﻿using Hotel.Common.DTOs;
+using Hotel.Common.DTOs.Bases;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace Hotel.Service.Interfaces
         /// </summary>
         /// <param name="guest">GuestDto object</param>
         /// <returns>GuestDto object</returns>
-        Task<GuestDto> CreateGuestAsync(GuestDto guest);
+        Task<GuestDto> CreateGuestAsync(BaseGuestDto guest);
 
         /// <summary>
         /// Delete a guest

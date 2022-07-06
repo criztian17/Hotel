@@ -1,4 +1,5 @@
 ﻿using Hotel.Common.DTOs;
+using Hotel.Common.DTOs.Bases;
 using System.Threading.Tasks;
 
 namespace Hotel.Service.Interfaces
@@ -8,9 +9,9 @@ namespace Hotel.Service.Interfaces
         /// <summary>
         /// Create a new notification
         /// </summary>
-        /// <param name="notification">NotificationDto object</param>
+        /// <param name="notification">BaseNotificationDto object</param>
         /// <returns>NotificationDto object</returns>
-        Task<NotificationDto> CreateNotificationAsync(NotificationDto notification);
+        Task<NotificationDto> CreateNotificationAsync(BaseNotificationDto notification);
 
     }
 }

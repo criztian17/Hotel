@@ -12,34 +12,34 @@ namespace Hotel.Service.Interfaces
         /// </summary>
         /// <param name="booking">BookingDto object</param>
         /// <returns>BookingFullDto object</returns>
-        Task<BookingFullDto> CreateBookingAsync(BookingDto booking);
+        Task<FullBookingDto> CreateBookingAsync(BookingDto booking);
 
         /// <summary>
         /// Delete a booking
         /// </summary>
         /// <param name="booking">RoomDto object</param>
         /// <returns>Boolean</returns>
-        Task<bool> DeleteBookingAsync(BookingFullDto booking);
+        Task<bool> DeleteBookingAsync(FullBookingDto booking);
         
         /// <summary>
         /// Get all the bookings
         /// </summary>
         /// <returns>Collection of BookingFullDto</returns>
-        Task<ICollection<BookingFullDto>> GetAllBookingsAsync();
+        Task<ICollection<FullBookingDto>> GetAllBookingsAsync();
 
         /// <summary>
         /// Get the booking by Id
         /// </summary>
         /// <param name="id">Booking Id</param>
         /// <returns>BookingFullDto object</returns>
-        Task<BookingFullDto> GetBookingByIdAsync(int id);
+        Task<FullBookingDto> GetBookingByIdAsync(int id);
 
         /// <summary>
         /// Update the booking
         /// </summary>
         /// <param name="booking">BookingFullDto object</param>
         /// <returns>Boolean</returns>
-        Task<bool> UpdateGuestAsync(BookingFullDto booking);
+        Task<bool> UpdateGuestAsync(FullBookingDto booking);
 
         /// <summary>
         /// Check if the booking exist
