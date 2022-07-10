@@ -1,4 +1,5 @@
 using Hotel.Api.Extensions;
+using Hotel.Service.Helpers.Mappers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,7 +25,8 @@ namespace Hotel.Api
             services
                 .AddSwaggerDocumentation()
                 .AddRepository()
-                .AddService();
+                .AddService()
+                .AddAutoMapper(typeof(ServiceMapperHelper));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

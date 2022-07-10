@@ -9,10 +9,10 @@ namespace Hotel.Api.Extensions
         public static IServiceCollection AddService(this IServiceCollection services)
         {
             services
-                .AddScoped<IGuestService, GuestService>()
-                .AddScoped<IRoomService, RoomService>()
-                .AddScoped<IBookingService, BookingService>()
-                .AddScoped<INotificationService, NotificationService>();
+                .AddTransient<IGuestService, GuestService>()
+                .AddTransient<IRoomService, RoomService>()
+                .AddTransient<IBookingService, BookingService>()
+                .AddTransient<INotificationService, NotificationService>();
             return services;
         }
 

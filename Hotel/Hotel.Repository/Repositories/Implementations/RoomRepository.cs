@@ -58,7 +58,34 @@ namespace Hotel.Repository.Repositories.Implementations
 
                 throw ex;
             }
-        } 
+        }
+
+        public async Task<bool> IsAvailableRoomAsync(int id)
+        {
+            try
+            {
+                var isAvailable = await _unitOfWork.DataContext.Rooms.Select(x => x).Where(x => x.Id == id && x.Status == (int)RoomStatus.Available).FirstOrDefaultAsync();
+
+                return isAvailable != null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<RoomEntity> GetRoomByRoomNumberAsync(string roomNumber)
+        {
+            try
+            {
+                return await _unitOfWork.DataContext.Rooms.Select(x => x).Where(x => x.RoomNumber == roomNumber).FirstOrDefaultAsync();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         #endregion
     }
 }

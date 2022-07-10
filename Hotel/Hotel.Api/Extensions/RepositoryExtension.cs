@@ -25,11 +25,11 @@ namespace Hotel.Api.Extensions
 
             });
             service.AddTransient<Seed>();
-            service.AddScoped<IUnitOfWork, UnitOfWork>();
-            service.AddScoped<IBookingRepository, BookingRepository>();
-            service.AddScoped<IRoomRepository, RoomRepository>();
-            service.AddScoped<IGuestRepository, GuestRepository>();
-            service.AddScoped<INotificationRepository, NotificationRepository>();
+            service.AddTransient<IUnitOfWork, UnitOfWork>();
+            service.AddTransient<IBookingRepository, BookingRepository>();
+            service.AddTransient<IRoomRepository, RoomRepository>();
+            service.AddTransient<IGuestRepository, GuestRepository>();
+            service.AddTransient<INotificationRepository, NotificationRepository>();
             return service;
         }
     }

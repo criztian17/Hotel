@@ -18,9 +18,9 @@ namespace Hotel.Service.Interfaces
         /// <summary>
         /// Delete a room
         /// </summary>
-        /// <param name="room">RoomDto object</param>
+        /// <param name="id">Room Id</param>
         /// <returns>Boolean</returns>
-        Task<bool> DeleteRoomAsync(RoomDto room);
+        Task<bool> DeleteRoomAsync(int id);
 
         /// <summary>
         /// Get all the rooms
@@ -43,13 +43,6 @@ namespace Hotel.Service.Interfaces
         Task<bool> UpdateRoomAsync(RoomDto room);
 
         /// <summary>
-        /// Check if the room exist
-        /// </summary>
-        /// <param name="id">Room Id</param>
-        /// <returns>Boolean</returns>
-        Task<bool> ExistRoomByIdAsync(int id);
-
-        /// <summary>
         /// Change the current status of the room
         /// </summary>
         /// <param name="id">Room Id</param>
@@ -62,6 +55,19 @@ namespace Hotel.Service.Interfaces
         /// </summary>
         /// <param name="id">Room Id</param>
         /// <returns>Boolean</returns>
-        Task<bool> IsAvailableAsync(int id);
+        Task<bool> IsAvailableRoomAsync(int id);
+
+        /// <summary>
+        /// Get the availables rooms
+        /// </summary>
+        /// <returns>Collection of RoomDto</returns>
+        Task<ICollection<RoomDto>> GetAvailablesRoomsAsync();
+
+        /// <summary>
+        /// Get the room by room number
+        /// </summary>
+        /// <param name="roomNumber">Number of the room</param>
+        /// <returns>RoomDto object</returns>
+        Task<RoomDto> GetRoomByRoomNumberAsync(string roomNumber);
     }
 }

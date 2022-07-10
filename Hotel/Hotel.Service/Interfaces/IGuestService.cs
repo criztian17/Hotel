@@ -17,9 +17,9 @@ namespace Hotel.Service.Interfaces
         /// <summary>
         /// Delete a guest
         /// </summary>
-        /// <param name="guest">GuestDto object</param>
+        /// <param name="id">Guest Id</param>
         /// <returns>Boolean</returns>
-        Task<bool> DeleteGuestAsync(GuestDto guest);
+        Task<bool> DeleteGuestAsync(int id);
 
         /// <summary>
         /// Get all the guests
@@ -57,15 +57,9 @@ namespace Hotel.Service.Interfaces
         /// <summary>
         /// Update the guest
         /// </summary>
-        /// <param name="guest">GuestDto object</param>
+        /// <param name="updatedGuest">GuestDto object</param>
         /// <returns>Boolean</returns>
-        Task<bool> UpdateGuestAsync(GuestDto guest);
-
-        /// <summary>
-        /// Check if the guest exist
-        /// </summary>
-        /// <param name="id">Guest Id</param>
-        /// <returns>Boolean</returns>
-        Task<bool> ExistGuestByIdAsync(int id);
+        Task<bool> UpdateGuestAsync(GuestDto updatedGuest);
+        
     }
 }
