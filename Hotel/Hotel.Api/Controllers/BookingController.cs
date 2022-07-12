@@ -1,4 +1,6 @@
-﻿using Hotel.Common.DTOs;
+﻿using Hotel.Api.Helpers;
+using Hotel.Common.DTOs;
+using Hotel.Common.Exceptions;
 using Hotel.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -23,10 +25,28 @@ namespace Hotel.Api.Controllers
 
         #region Actions
 
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpPost]
+        [Route("CreateBookingAsync")]
+        [SwaggerOperation("Create guest")]
+        [SwaggerResponse(200, type: typeof(FullBookingDto))]
+        [SwaggerResponse(400, type: typeof(RuleError))]
+        [SwaggerResponse(500, Description = "Internal Server Error")]
+        public async Task<ActionResult<FullBookingDto>> CreateBookingAsync([FromBody] BookingDto booking)
         {
-            return "value";
+            try
+            {
+                return new JsonResult(await _bookingService.CreateBookingAsync(booking));
+            }
+            catch (System.Exception ex)
+            {
+                BusinessException businessException = (BusinessException)ex;
+                if (!(ex is BusinessException))
+                {
+                    throw ex;
+                }
+
+                return await ActionResultExceptionHelper.ResultException(businessException, HttpContext);
+            }
         }
 
         [HttpPost]

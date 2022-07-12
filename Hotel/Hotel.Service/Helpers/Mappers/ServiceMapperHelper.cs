@@ -21,6 +21,12 @@ namespace Hotel.Service.Helpers.Mappers
 
             CreateMap<RoomEntity, BaseRoomDto>()
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => (RoomStatus)src.Status));
+
+            CreateMap<FullBookingDto, BookingEntity>()
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => (int)src.Status));
+
+            CreateMap<BookingEntity, FullBookingDto>()
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => (BookingStatus)src.Status));
         }
     }
 }

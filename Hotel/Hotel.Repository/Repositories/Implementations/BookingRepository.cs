@@ -2,6 +2,7 @@
 using Hotel.Repository.Entities;
 using Hotel.Repository.Repositories.Interfaces;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Hotel.Repository.Repositories.Implementations
@@ -18,7 +19,24 @@ namespace Hotel.Repository.Repositories.Implementations
         {
             _unitOfWork = unitOfWork;
         }
+
+        public int GenerateBookingNumber()
+        {
+            try
+            {
+                var bookingNumber = _unitOfWork.DataContext.Bookings.Any() ? _unitOfWork.DataContext.Bookings.Select(x => x.BookingNumber).Max() : 1;
+
+                if (bookingNumber == 1)
+                    return bookingNumber;
+
+                return bookingNumber + 1;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         #endregion
-       
+
     }
 }

@@ -136,7 +136,10 @@ namespace Hotel.Service.Implementations
                 if (!await DoesRoomExistByIdAsync(id))
                     throw new BusinessException(400, string.Format(Constants.CommonMessages.NotExist, "room", id));
 
-                return await _roomRepository.IsAvailableRoomAsync(id);
+                if (!await _roomRepository.IsAvailableRoomAsync(id))
+                    throw new BusinessException(400, Constants.RoomMessages.NotAvailable);
+
+                return true;
             }
             catch (Exception)
             {

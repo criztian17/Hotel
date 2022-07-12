@@ -20,8 +20,14 @@
         { 
             public const string RoomExist = "The room with {0} {1} already exists.";
             public const string RoomDoesNotExist = "The room with room number {0} does not exist.";
+            public const string NotAvailable = "The room is not available.";
+        }
 
-
+        public static class BookingMessages
+        { 
+            public const string AdvanceDays = "You cannot book in {0} days of advance.";
+            public const string IncorrectDates = "The checkout date must be greater than the checkin date.";
+            public const string AllowedDays = "You cannot book more than {0} days.";
         }
 
     }

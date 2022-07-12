@@ -15,7 +15,7 @@ namespace Hotel.Repository.Entities
         /// </summary>
         [Required]
         [MaxLength(10)]
-        public string BookingNumber { get; set; }
+        public int BookingNumber { get; set; }
 
         /// <summary>
         /// Booked Room
