@@ -1,6 +1,6 @@
-﻿using Hotel.Common.Enumerators;
-using Hotel.Repository.Entities;
+﻿using Hotel.Repository.Entities;
 using Hotel.Repository.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,10 +24,10 @@ namespace Hotel.Repository.Repositories.Implementations
         {
             try
             {
-                var bookingNumber = _unitOfWork.DataContext.Bookings.Any() ? _unitOfWork.DataContext.Bookings.Select(x => x.BookingNumber).Max() : 1;
+                var bookingNumber = _unitOfWork.DataContext.Bookings.Any() ? _unitOfWork.DataContext.Bookings.AsNoTracking().Select(x => x.BookingNumber).Max() : 0;
 
-                if (bookingNumber == 1)
-                    return bookingNumber;
+                if (bookingNumber == 0)
+                    return  1;
 
                 return bookingNumber + 1;
             }
@@ -37,6 +37,5 @@ namespace Hotel.Repository.Repositories.Implementations
             }
         }
         #endregion
-
     }
 }

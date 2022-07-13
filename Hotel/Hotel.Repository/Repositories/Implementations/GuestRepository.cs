@@ -23,13 +23,21 @@ namespace Hotel.Repository.Repositories.Implementations
         {
             try
             {
-                return await _unitOfWork.DataContext.Guests.Select(x => x).Where(x => x.Email == email).FirstOrDefaultAsync();
+                return await _unitOfWork.DataContext.Guests.AsNoTracking()
+                                            .Select(x => x)
+                                            .Where(x => x.Email == email)
+                                            .FirstOrDefaultAsync();
             }
             catch (Exception)
             {
 
                 throw;
             }
+        }
+
+        public async Task<bool> DoesGuestHaveBookingsAsync(int id)
+        {
+            return await _unitOfWork.DataContext.Bookings.AsNoTracking().Where(x => x.GuestId == id).AnyAsync();
         }
         #endregion
     }

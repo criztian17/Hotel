@@ -1,6 +1,7 @@
 ﻿using Hotel.Common.DTOs;
 using Hotel.Common.DTOs.Bases;
 using Hotel.Common.Enumerators;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -54,14 +55,18 @@ namespace Hotel.Service.Interfaces
         /// Check if the room is available to be booked
         /// </summary>
         /// <param name="id">Room Id</param>
+        /// <param name="startDate">When the booking starts</param>
+        /// <param name="endDate">When the booking ends</param>
         /// <returns>Boolean</returns>
-        Task<bool> IsAvailableRoomAsync(int id);
+        Task<bool> IsAvailableRoomAsync(int id, DateTime startDate, DateTime endDate);
 
         /// <summary>
         /// Get the availables rooms
         /// </summary>
+        /// <param name="startDate">Date from</param>
+        /// <param name="endDate">Date end</param>
         /// <returns>Collection of RoomDto</returns>
-        Task<ICollection<RoomDto>> GetAvailablesRoomsAsync();
+        Task<ICollection<RoomDto>> GetAvailablesRoomsAsync(DateTime startDate, DateTime endDate);
 
         /// <summary>
         /// Get the room by room number

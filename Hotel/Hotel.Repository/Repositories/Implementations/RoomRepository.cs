@@ -24,18 +24,43 @@ namespace Hotel.Repository.Repositories.Implementations
 
         #region Public Methods
 
-        public async Task<ICollection<RoomEntity>> GetAvailableRoomsAsync()
+        public async Task<ICollection<RoomEntity>> GetAvailableRoomsAsync(DateTime startDate, DateTime endDate)
         {
             try
             {
-                var availableRooms = await _unitOfWork.DataContext.Rooms.Select(x => x).Where(x => x.Status == (int)RoomStatus.Available).ToListAsync();
 
-                if (!availableRooms.Any())
+                var haveBooking = await _unitOfWork.DataContext.Bookings.AsNoTracking().Select(x => x).AnyAsync();
+
+                if (haveBooking)
                 {
-                    return new List<RoomEntity>();
+                    var bookings = await _unitOfWork.DataContext.Bookings.AsNoTracking()
+                        .Where(x => x.CheckIn >= startDate &&
+                               x.CheckOut <= endDate &&
+                               (x.Status == (int)BookingStatus.CheckOut || x.Status == (int)BookingStatus.Canceled) &&
+                               DateTime.Now < startDate &&
+                               DateTime.Now < endDate)
+                        .Select(x => x.Id).ToListAsync();
+
+                    List<RoomEntity> roomsWithoutBooking = await _unitOfWork.DataContext.Rooms.AsNoTracking()
+                                    .Select(x => x)
+                                    .Where(x => !bookings.Contains(x.Id) &&
+                                           x.Status == (int)RoomStatus.Available &&
+                                           DateTime.Now < startDate &&
+                                    DateTime.Now < endDate).ToListAsync();
+
+                    List<RoomEntity> roomsWithBooking = await _unitOfWork.DataContext.Rooms.AsNoTracking()
+                                    .Select(x => x)
+                                    .Where(x => bookings.Contains(x.Id) &&
+                                           x.Status == (int)RoomStatus.Available &&
+                                           DateTime.Now < startDate &&
+                                    DateTime.Now < endDate).ToListAsync();
+
+                    return roomsWithoutBooking.Union(roomsWithBooking).ToList();
                 }
 
-                return availableRooms;
+                return await _unitOfWork.DataContext.Rooms.AsNoTracking()
+                    .Select(x => x).Where(x => x.Status == (int)RoomStatus.Available).ToListAsync();
+
             }
             catch (Exception ex)
             {
@@ -60,13 +85,23 @@ namespace Hotel.Repository.Repositories.Implementations
             }
         }
 
-        public async Task<bool> IsAvailableRoomAsync(int id)
+        public async Task<bool> IsAvailableRoomAsync(int id, DateTime startDate, DateTime endDate)
         {
             try
             {
-                var isAvailable = await _unitOfWork.DataContext.Rooms.Select(x => x).Where(x => x.Id == id && x.Status == (int)RoomStatus.Available).FirstOrDefaultAsync();
+                var isAvailableRoom = await (from room in _unitOfWork.DataContext.Rooms.AsNoTracking()
+                                             join bookings in _unitOfWork.DataContext.Bookings.AsNoTracking() on room.Id equals bookings.RoomId
+                                             where
+                                                bookings.RoomId == id &&
+                                                (bookings.CheckIn >= startDate && bookings.CheckOut <= endDate) &&
+                                                (bookings.Status == (int)BookingStatus.CheckIn || bookings.Status == (int)BookingStatus.Booked) &&
+                                                room.Status == (int)RoomStatus.Available &&
+                                                DateTime.Now < startDate &&
+                                                DateTime.Now < endDate
+                                             select room).FirstOrDefaultAsync();
 
-                return isAvailable != null;
+
+                return isAvailableRoom == null;
             }
             catch (Exception ex)
             {
@@ -78,13 +113,21 @@ namespace Hotel.Repository.Repositories.Implementations
         {
             try
             {
-                return await _unitOfWork.DataContext.Rooms.Select(x => x).Where(x => x.RoomNumber == roomNumber).FirstOrDefaultAsync();
+                return await _unitOfWork.DataContext.Rooms.AsNoTracking()
+                                                    .Select(x => x)
+                                                    .Where(x => x.RoomNumber == roomNumber)
+                                                    .FirstOrDefaultAsync();
             }
             catch (Exception)
             {
 
                 throw;
             }
+        }
+
+        public async Task<bool> DoesRoomHaveBookingsAsync(int id)
+        {
+            return await _unitOfWork.DataContext.Bookings.AsNoTracking().Where(x => x.RoomId == id).AnyAsync();
         }
         #endregion
     }

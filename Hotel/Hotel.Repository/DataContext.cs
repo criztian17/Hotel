@@ -52,11 +52,13 @@ namespace Hotel.Repository
 
             modelBuilder.Entity<BookingEntity>()
               .HasOne(b => b.Guest)
-              .WithMany(g => g.Bookings);
+              .WithMany(g => g.Bookings)
+              .HasForeignKey(g => g.GuestId);
 
             modelBuilder.Entity<BookingEntity>()
               .HasOne(b => b.Room)
-              .WithMany(r => r.Bookings);
+              .WithMany(r => r.Bookings)
+              .HasForeignKey(r => r.RoomId);
 
             base.OnModelCreating(modelBuilder);
         }

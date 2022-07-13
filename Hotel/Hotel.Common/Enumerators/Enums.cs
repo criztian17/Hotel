@@ -32,6 +32,9 @@ namespace Hotel.Common.Enumerators
         CheckOut = 3
     }
 
+    /// <summary>
+    /// Contains the status of the notification
+    /// </summary>
     public enum NotificationStatus : short
     { 
         [Description("Pending")]

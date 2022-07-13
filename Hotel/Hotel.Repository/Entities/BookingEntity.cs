@@ -17,14 +17,14 @@ namespace Hotel.Repository.Entities
         [MaxLength(10)]
         public int BookingNumber { get; set; }
 
-        /// <summary>
-        /// Booked Room
-        /// </summary>
+        ///// <summary>
+        ///// Booked Room
+        ///// </summary>
         public RoomEntity Room { get; set; }
 
-        /// <summary>
-        /// Guest who books the room
-        /// </summary>
+        ///// <summary>
+        ///// Guest who books the room
+        ///// </summary>
         public GuestEntity Guest { get; set; }
 
         /// <summary>
@@ -62,5 +62,16 @@ namespace Hotel.Repository.Entities
         /// </summary>
         [Required]
         public int Status { get; set; }
+
+        /// <summary>
+        /// ID of the booked room
+        /// </summary>
+        public int RoomId { get; set; }
+
+
+        /// <summary>
+        /// ID of the guest who is booking
+        /// </summary>
+        public int GuestId { get; set; }
     }
 }

@@ -1,5 +1,6 @@
-﻿using Hotel.Common;
-using Hotel.Common.DTOs;
+﻿using Hotel.Common.DTOs;
+using Hotel.Common.DTOs.Bases;
+using Hotel.Common.Enumerators;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,13 +15,6 @@ namespace Hotel.Service.Interfaces
         /// <returns>BookingFullDto object</returns>
         Task<FullBookingDto> CreateBookingAsync(BookingDto booking);
 
-        /// <summary>
-        /// Delete a booking
-        /// </summary>
-        /// <param name="booking">RoomDto object</param>
-        /// <returns>Boolean</returns>
-        Task<bool> DeleteBookingAsync(FullBookingDto booking);
-        
         /// <summary>
         /// Get all the bookings
         /// </summary>
@@ -37,16 +31,18 @@ namespace Hotel.Service.Interfaces
         /// <summary>
         /// Update the booking
         /// </summary>
-        /// <param name="booking">BookingFullDto object</param>
+        /// <param name="id">Booking Id</param>
+        /// <param name="BaseBookingDto">updatedBbooking object</param>
         /// <returns>Boolean</returns>
-        Task<bool> UpdateGuestAsync(FullBookingDto booking);
+        Task<bool> UpdateBookingAsync(int id, BaseBookingDto updatedBbooking);
 
         /// <summary>
-        /// Check if the booking exist
+        /// Change the status of the booking
         /// </summary>
         /// <param name="id">Booking Id</param>
-        /// <returns>Boolean</returns>
-        Task<bool> ExistBookingByIdAsync(int id);
+        /// <param name="status">New Statust</param>
+        /// <returns>bool</returns>
+        Task<bool> ChanceBookingStatus(int id, BookingStatus status);
 
     }
 }

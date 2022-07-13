@@ -26,6 +26,7 @@ namespace Hotel.Api
                 .AddSwaggerDocumentation()
                 .AddRepository()
                 .AddService()
+                .AddCustomConfigurations(Configuration)
                 .AddAutoMapper(typeof(ServiceMapperHelper));
         }
 

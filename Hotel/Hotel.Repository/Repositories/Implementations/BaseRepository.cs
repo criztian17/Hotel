@@ -70,7 +70,7 @@ namespace Hotel.Repository.Repositories.Implementations
         {
             try
             {
-                return _unitOfWork.DataContext.Set<T>().AsNoTracking();
+                return _unitOfWork.DataContext.Set<T>().AsNoTrackingWithIdentityResolution();
             }
             catch (Exception ex)
             {
@@ -97,7 +97,8 @@ namespace Hotel.Repository.Repositories.Implementations
         {
             try
             {
-                this._unitOfWork.DataContext.Set<T>().Update(entity);
+                var updatedEntity = this._unitOfWork.DataContext.Set<T>().Update(entity);
+                updatedEntity.State = EntityState.Modified;
                 return await _unitOfWork.CommitAsync();
             }
             catch (Exception ex)

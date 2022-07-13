@@ -22,7 +22,6 @@ namespace Hotel.Service.Implementations
         #region Attributes
         private readonly IRoomRepository _roomRepository;
         private readonly IMapper _mapper;
-        //private readonly IBookingService _bookingService;
         #endregion
 
         #region Constructor
@@ -30,7 +29,6 @@ namespace Hotel.Service.Implementations
         {
             _roomRepository = roomRepository;
             _mapper = mapper;
-            //_bookingService = bookingService;
         }
         #endregion
 
@@ -61,7 +59,7 @@ namespace Hotel.Service.Implementations
 
                 if (await DoesRoomtExistByNumberAsync(room.RoomNumber))
                     throw new BusinessException(400, string.Format(Constants.RoomMessages.RoomExist, "room number", room.RoomNumber));
-                
+
 
                 var result = await _roomRepository.CreateAsync(_mapper.Map<BaseRoomDto, RoomEntity>(room));
 
@@ -80,11 +78,8 @@ namespace Hotel.Service.Implementations
                 if (!await DoesRoomExistByIdAsync(id))
                     throw new BusinessException(400, "Room cannot be deleted. " + string.Format(Constants.CommonMessages.NotExist, "room", id));
 
-                //TODO: Pending validate if the room already has any booking
-                if (true)
-                {
-
-                }
+                if (await _roomRepository.DoesRoomHaveBookingsAsync(id))
+                    throw new BusinessException(400, "Room cannot be deleted. " + string.Format(Constants.CommonMessages.HasRecords, "bookings"));
 
                 var guest = await _roomRepository.GetByIdAsync(id);
 
@@ -96,7 +91,7 @@ namespace Hotel.Service.Implementations
                 throw;
             }
         }
-       
+
         public async Task<ICollection<RoomDto>> GetAllRoomsAsync()
         {
             try
@@ -129,17 +124,34 @@ namespace Hotel.Service.Implementations
             }
         }
 
-        public async Task<bool> IsAvailableRoomAsync(int id)
+        public async Task<bool> IsAvailableRoomAsync(int id, DateTime startDate, DateTime endDate)
         {
             try
             {
-                if (!await DoesRoomExistByIdAsync(id))
-                    throw new BusinessException(400, string.Format(Constants.CommonMessages.NotExist, "room", id));
+                var room = await GetRoomByIdAsync(id);
 
-                if (!await _roomRepository.IsAvailableRoomAsync(id))
+                if (!CorrectDates(startDate, endDate))
+                    throw new BusinessException(400, Constants.CommonMessages.IncorrectDates);
+
+                var hasBooking = await _roomRepository.DoesRoomHaveBookingsAsync(id);
+
+                if (!hasBooking && room.Status == (RoomStatus.Available) && DateTime.Now < startDate && DateTime.Now < endDate)
+                    return true;
+
+                if (!(room.Status == (RoomStatus.Available) && DateTime.Now < startDate && DateTime.Now < endDate))
                     throw new BusinessException(400, Constants.RoomMessages.NotAvailable);
 
-                return true;
+                if (hasBooking)
+                {
+                    startDate = FixDate(startDate);
+                    endDate = FixDate(endDate, false);
+
+                    var result = await _roomRepository.IsAvailableRoomAsync(id, startDate, endDate);
+
+                    return !result ? throw new BusinessException(400, Constants.RoomMessages.NotAvailable) : result;
+                }
+
+                throw new BusinessException(400, Constants.RoomMessages.NotAvailable);
             }
             catch (Exception)
             {
@@ -180,11 +192,14 @@ namespace Hotel.Service.Implementations
             }
         }
 
-        public async Task<ICollection<RoomDto>> GetAvailablesRoomsAsync()
+        public async Task<ICollection<RoomDto>> GetAvailablesRoomsAsync(DateTime startDate, DateTime endDate)
         {
             try
             {
-                var result = await _roomRepository.GetAvailableRoomsAsync();
+                startDate = FixDate(startDate);
+                endDate = FixDate(endDate, false);
+
+                var result = await _roomRepository.GetAvailableRoomsAsync(startDate, endDate);
 
                 return _mapper.Map<List<RoomEntity>, ICollection<RoomDto>>((List<RoomEntity>)result);
             }
@@ -198,7 +213,7 @@ namespace Hotel.Service.Implementations
         {
             try
             {
-                if (! await DoesRoomtExistByNumberAsync(roomNumber))
+                if (!await DoesRoomtExistByNumberAsync(roomNumber))
                 {
                     throw new BusinessException(400, string.Format(Constants.RoomMessages.RoomDoesNotExist, roomNumber));
                 }
@@ -248,7 +263,23 @@ namespace Hotel.Service.Implementations
                 throw;
             }
         }
-        
+
+        private DateTime FixDate(DateTime date, bool isStartDate = true)
+        {
+            date = isStartDate ? Convert.ToDateTime(date.ToShortDateString()) : date;
+
+            if (!isStartDate)
+            {
+                date = new DateTime(date.Year, date.Month, date.Day, 23, 59, 59);
+            }
+            return date;
+        }
+
+
+        private bool CorrectDates(DateTime startBookingDate, DateTime endBookingDate)
+        {
+            return (startBookingDate <= endBookingDate);
+        }
         #endregion
     }
 }

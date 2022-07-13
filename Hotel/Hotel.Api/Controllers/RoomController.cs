@@ -6,6 +6,7 @@ using Hotel.Common.Exceptions;
 using Hotel.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -101,16 +102,16 @@ namespace Hotel.Api.Controllers
         }
 
         [HttpGet]
-        [Route("GetAvailablesRoomsAsync")]
+        [Route("GetAvailablesRoomsAsync/{startDate}/{endDate}")]
         [SwaggerOperation("Get all the availables rooms")]
         [SwaggerResponse(200, type: typeof(ICollection<RoomDto>))]
         [SwaggerResponse(400, type: typeof(RuleError))]
         [SwaggerResponse(500, Description = "Internal Server Error")]
-        public async Task<ActionResult<ICollection<RoomDto>>> GetAvailablesRoomsAsync()
+        public async Task<ActionResult<ICollection<RoomDto>>> GetAvailablesRoomsAsync(DateTime startDate, DateTime endDate)
         {
             try
             {
-                return new JsonResult(await _roomService.GetAvailablesRoomsAsync());
+                return new JsonResult(await _roomService.GetAvailablesRoomsAsync(startDate, endDate));
             }
             catch (System.Exception ex)
             {
@@ -149,16 +150,16 @@ namespace Hotel.Api.Controllers
         }
 
         [HttpGet]
-        [Route("IsAvailableRoomAsync/{id}")]
+        [Route("IsAvailableRoomAsync/{id}/{startDate}/{endDate}")]
         [SwaggerOperation("Check if the room is available")]
         [SwaggerResponse(200, type: typeof(ICollection<bool>))]
         [SwaggerResponse(400, type: typeof(RuleError))]
         [SwaggerResponse(500, Description = "Internal Server Error")]
-        public async Task<ActionResult<ICollection<bool>>> IsAvailableRoomAsync(int id)
+        public async Task<ActionResult<ICollection<bool>>> IsAvailableRoomAsync(int id, DateTime startDate, DateTime endDate)
         {
             try
             {
-                return new JsonResult(await _roomService.IsAvailableRoomAsync(id));
+                return new JsonResult(await _roomService.IsAvailableRoomAsync(id, startDate, endDate));
             }
             catch (System.Exception ex)
             {

@@ -19,14 +19,12 @@ namespace Hotel.Service.Implementations
     {
         #region Attributes
         private readonly IGuestRepository _guestRepository;
-        //private readonly IBookingService _bookingService;
         #endregion
 
         #region Constructor
         public GuestService(IGuestRepository guestRepository)
         {
             _guestRepository = guestRepository;
-            //_bookingService = bookingService;
         }
         #endregion
 
@@ -62,11 +60,8 @@ namespace Hotel.Service.Implementations
                 if (!await DoesGuestExistByIdAsync(id))
                     throw new BusinessException(400, "Guest cannot be deleted. " + string.Format(Constants.CommonMessages.NotExist, "guest", id));
 
-                //TODO: Pending validate if the guest already has any booking
-                if (true)
-                {
-
-                }
+                if (await _guestRepository.DoesGuestHaveBookingsAsync(id))
+                    throw new BusinessException(400, "Guest cannot be deleted. " + string.Format(Constants.CommonMessages.HasRecords, "bookings"));
 
                 var guest = await _guestRepository.GetByIdAsync(id);
 
@@ -103,9 +98,9 @@ namespace Hotel.Service.Implementations
         {
             try
             {
-                if (await DoesGuestExistByEmailAsync(email))
+                if (!await DoesGuestExistByEmailAsync(email))
                 {
-                    throw new BusinessException(400, string.Format(Constants.GuestMessages.GuestDoesNotExist, email));
+                    throw new BusinessException(400, string.Format(Constants.GuestMessages.GuestDoesNotExist, "email", email));
                 }
 
                 var guest = await _guestRepository.GetGuestByEmailAsync(email);
